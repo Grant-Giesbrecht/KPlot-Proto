@@ -40,8 +40,11 @@ typedef struct{ //Used to contain data required to convert numeric values to pix
     double low_val;
 }axes_conversion;
 
+void trim_kplot(KTrace& kt, double xMin, double xMax, double yMin, double yMax);
 
 std::vector<KPoint> tessellate_line(KTrace t, int thickness);
+
+std::vector<KPoint> tessellate_line(KTrace t, int thickness, double xMin, double xMax, double yMin, double yMax);
 
 std::vector<std::vector<KPoint> > tessellate_pattern_line(KTrace t, int thickness, int c1, int c2, int c3, int c4, int c5);
 

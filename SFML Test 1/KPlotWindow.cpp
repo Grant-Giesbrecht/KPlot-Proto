@@ -14,7 +14,7 @@
 #include <chrono>
 //#include <unistd.h>
 
-#define NULL_TAB_IDENTIFIER "KPLOT RESERVED NAME null_tab"
+#define NULL_TAB_IDENTIFIER "KPLOT RESERVED NAME null_tab DONT USE THIS NAME!"
 
 using namespace std;
 
@@ -45,11 +45,11 @@ KPlotWindow::KPlotWindow(int nwidth, int nheight, std::string title) : scan_even
     univ_id = all_windows.size()-1;
     all_windows_mutex.unlock();
     
-    sf::Image icon;
-    if (!icon.loadFromFile(resourcePath() + "IEGA_Oval_Logo_Border.png")) {
-//        return EXIT_FAILURE;
-    }
-    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+//    sf::Image icon;
+//    if (!icon.loadFromFile(resourcePath() + "IEGA_Oval_Logo_Border.png")) {
+////        return EXIT_FAILURE;
+//    }
+//    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     
     std::lock_guard<std::mutex> guard(mtx);
     show_toolbar = true;

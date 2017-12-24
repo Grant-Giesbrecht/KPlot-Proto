@@ -307,20 +307,10 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     
     //==================== Draw small grid ===========================
     
-    //std::c out << "LB: " << left_bound << std::endl;
-    //std::c out << "RB: " << right_bound << std::endl;
-    //std::c out << "TB: " << top_bound << std::endl;
-    //std::c out << "LwB: " << low_bound << std::endl;
-    //std::c out << "Tt: " << kg.title << std::endl;
-//    //std::c out << kg.x_min << std::endl;
-//    //std::c out << kg.x_max << std::endl;
-//    //std::c out << kg.y_min << std::endl;
-//    //std::c out << kg.y_max << std::endl;
-    
     axes_conversion ac = {left_bound, right_bound, top_bound, low_bound, kg.x_min, kg.x_max, kg.y_max, kg.y_min};
     
-    //Neg X grid
-    double x_val = 0;
+    //X grid
+    double x_val = kg.x_max;
     while (x_val >= kg.x_min){
         
         //Add grid line
@@ -335,24 +325,24 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
         x_val -= kg.xtick_small;
     }
     
-    //Pos X grid
-    x_val = 0;
-    while (x_val <= kg.x_max){
-        
-        //Add grid line
-        KTrace temp;
-        temp.addPoint(x_pixel(x_val, ac), y_pixel(kg.y_min, ac));
-        temp.addPoint(x_pixel(x_val, ac), y_pixel(kg.y_max, ac));
-        drawptr grid_temp = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
-        tes_to_vertexarray( tessellate_line(temp, small_grid_thickness), grid_temp, small_grid_color);
-        drawings.push_back(grid_temp);
-        
-        //Shift x value
-        x_val += kg.xtick_small;
-    }
+//    //Pos X grid
+//    x_val = 0;
+//    while (x_val <= kg.x_max){
+//
+//        //Add grid line
+//        KTrace temp;
+//        temp.addPoint(x_pixel(x_val, ac), y_pixel(kg.y_min, ac));
+//        temp.addPoint(x_pixel(x_val, ac), y_pixel(kg.y_max, ac));
+//        drawptr grid_temp = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
+//        tes_to_vertexarray( tessellate_line(temp, small_grid_thickness), grid_temp, small_grid_color);
+//        drawings.push_back(grid_temp);
+//
+//        //Shift x value
+//        x_val += kg.xtick_small;
+//    }
     
-    //Neg Y grid
-    x_val = 0;
+    //Y grid
+    x_val = kg.y_max;
     while (x_val >= kg.y_min){
         
         //Add grid line
@@ -368,26 +358,26 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     }
     
     //Pos Y grid
-    x_val = 0;
-    while (x_val <= kg.y_max){
-        
-        //Add grid line
-        KTrace temp;
-        temp.addPoint(x_pixel(kg.x_min, ac), y_pixel(x_val, ac));
-        temp.addPoint(x_pixel(kg.x_max, ac), y_pixel(x_val, ac));
-        drawptr grid_temp = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
-        tes_to_vertexarray( tessellate_line(temp, small_grid_thickness), grid_temp, small_grid_color);
-        drawings.push_back(grid_temp);
-        
-        //Shift x value
-        x_val += kg.ytick_small;
-    }
+//    x_val = 0;
+//    while (x_val <= kg.y_max){
+//
+//        //Add grid line
+//        KTrace temp;
+//        temp.addPoint(x_pixel(kg.x_min, ac), y_pixel(x_val, ac));
+//        temp.addPoint(x_pixel(kg.x_max, ac), y_pixel(x_val, ac));
+//        drawptr grid_temp = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
+//        tes_to_vertexarray( tessellate_line(temp, small_grid_thickness), grid_temp, small_grid_color);
+//        drawings.push_back(grid_temp);
+//
+//        //Shift x value
+//        x_val += kg.ytick_small;
+//    }
     
     //==================== Draw big grid ===========================
     
     
-    //Neg X grid
-    x_val = 0;
+    //X grid
+    x_val = kg.x_max;
     while (x_val >= kg.x_min){
         
         //Add grid line
@@ -403,23 +393,23 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     }
     
     //Pos X grid
-    x_val = 0;
-    while (x_val <= kg.x_max){
-        
-        //Add grid line
-        KTrace temp;
-        temp.addPoint(x_pixel(x_val, ac), y_pixel(kg.y_min, ac));
-        temp.addPoint(x_pixel(x_val, ac), y_pixel(kg.y_max, ac));
-        drawptr grid_temp = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
-        tes_to_vertexarray( tessellate_line(temp, grid_thickness), grid_temp, grid_color);
-        drawings.push_back(grid_temp);
-        
-        //Shift x value
-        x_val += kg.xtick_big;
-    }
+//    x_val = 0;
+//    while (x_val <= kg.x_max){
+//
+//        //Add grid line
+//        KTrace temp;
+//        temp.addPoint(x_pixel(x_val, ac), y_pixel(kg.y_min, ac));
+//        temp.addPoint(x_pixel(x_val, ac), y_pixel(kg.y_max, ac));
+//        drawptr grid_temp = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
+//        tes_to_vertexarray( tessellate_line(temp, grid_thickness), grid_temp, grid_color);
+//        drawings.push_back(grid_temp);
+//
+//        //Shift x value
+//        x_val += kg.xtick_big;
+//    }
     
-    //Neg Y grid
-    x_val = 0;
+    //Y grid
+    x_val = kg.y_max;
     while (x_val >= kg.y_min){
         
         //Add grid line
@@ -435,20 +425,20 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     }
     
     //Pos Y grid
-    x_val = 0;
-    while (x_val <= kg.y_max){
-        
-        //Add grid line
-        KTrace temp;
-        temp.addPoint(x_pixel(kg.x_min, ac), y_pixel(x_val, ac));
-        temp.addPoint(x_pixel(kg.x_max, ac), y_pixel(x_val, ac));
-        drawptr grid_temp = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
-        tes_to_vertexarray( tessellate_line(temp, grid_thickness), grid_temp, grid_color);
-        drawings.push_back(grid_temp);
-        
-        //Shift x value
-        x_val += kg.ytick_big;
-    }
+//    x_val = 0;
+//    while (x_val <= kg.y_max){
+//
+//        //Add grid line
+//        KTrace temp;
+//        temp.addPoint(x_pixel(kg.x_min, ac), y_pixel(x_val, ac));
+//        temp.addPoint(x_pixel(kg.x_max, ac), y_pixel(x_val, ac));
+//        drawptr grid_temp = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
+//        tes_to_vertexarray( tessellate_line(temp, grid_thickness), grid_temp, grid_color);
+//        drawings.push_back(grid_temp);
+//
+//        //Shift x value
+//        x_val += kg.ytick_big;
+//    }
     
     
     //========================================= Draw Axes =======================================================
@@ -483,8 +473,11 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     
     //======================================== Draw Labels =========================================================
     
+    std::cout << "Xmin: " << kg.x_min << " Xmax: " << kg.x_max << " tick_size: " << kg.xtick_num << std::endl;
+    
+    
     //Neg X axes
-    x_val = -1*kg.xtick_num;
+    x_val = -1*fmin(kg.xtick_num, kg.x_max);
     while (x_val >= kg.x_min){
         
         //Add label
@@ -501,7 +494,7 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     }
     
     //Pos X grid
-    x_val = kg.xtick_num;
+    x_val = fmax(kg.xtick_num, kg.x_min);
     while (x_val <= kg.x_max){
         
         //Add label
@@ -518,7 +511,7 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     }
     
     //Neg Y grid
-    x_val = -1*kg.ytick_num;
+    x_val = -1*fmin(kg.ytick_num, kg.y_max);
     while (x_val >= kg.y_min){
         
         //Add label
@@ -535,7 +528,7 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     }
     
     //Pos Y grid
-    x_val = kg.ytick_num;
+    x_val = fmax(kg.ytick_num, kg.y_min);
     while (x_val <= kg.y_max){
         
         //Add label

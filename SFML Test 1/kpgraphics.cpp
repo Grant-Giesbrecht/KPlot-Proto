@@ -17,6 +17,17 @@
 using namespace std;
 
 /*
+ 
+ */
+void trim_ktrace(KTrace& kt, double xMin, double xMax, double yMin, double yMax){
+    for (int i = 0 ; i < kt.points.size() ; i++){
+        if (kt.points[i].x > xMax || kt.points[i].x < xMin || kt.points[i].y < yMin || kt.points[i].y > yMax){
+            
+        }
+    }
+}
+
+/*
  Converts a line with no thickness to a vector of tessellated points from which a thick line can be rendered.
  
  t - trace to tesselate
@@ -158,6 +169,8 @@ std::vector<KPoint> tessellate_line(KTrace t, int thickness){ //TODO: Accomodate
     //Return tessellation verticies
     return pts;
 }
+
+
 
 /*
  Converts a line with no thickness to a set of vectors of tessellated points. Each set of points can be used to make a small line segment, all of these segments (in the outermost vector) constitue the origional line broken up into the pattern described by c1-5.

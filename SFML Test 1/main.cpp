@@ -191,14 +191,16 @@ int main(int, char const**){
     //    kpw3.add_tab(kpt2, "Tab 1");
     kpw4.set(KP_SET_WSTYLE, KP_WSTYLE_CLASSIC);*/
     
-    KMatrix km("0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10");
+//    KMatrix km("0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10");
+    KMatrix km("100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110;1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10");
     KPlot kp("Trace1", km);
+    kp.setBounds(100, 110, 0, 10);
     if (!kp.setTraceColor("Trace1", sf::Color::Red));
 //    kp.setWindowSize(desktop.height, desktop.height*.75);
 //    kp.setTraceColor("Trace1", KP_COLOR_ORANGE);
 //    kp.setWindowStyle(KP_WSTYLE_CLASSIC);
 //    kp.event_loop();
-    
+    /*
     KMatrix xkm("0, 1, 2, 3, 4, 5, 6, 7, 8");
     KMatrix ykm("0, 1, 4, 5, 6, 5, 3, 2.5, 4");
     KPlot kp2("Trace 1", xkm, ykm);
@@ -213,6 +215,7 @@ int main(int, char const**){
     kp2.setBounds(-1, 10, 0, 10);
     kp2.setXTicks(1, 3, 3);
     kp2.setYTicks(2, 5, 2);
+     */
 //    kp2.setTraceType("Trace 2", KT_TYPE_POINT);
 //    kp2.setTraceStyle("Trace 2", KT_STYLE_CROSSHAIR);
 //    kp2.setTraceColor("Trace 2", sf::Color::Red);

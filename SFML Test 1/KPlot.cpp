@@ -62,8 +62,6 @@ void KPlot::addTrace(string name, KMatrix km){
         mainWindow.getTab(0).getGraph(0, success).addTrace(name, *trace);
         
     }
-    
-    return success;
 }
 
 void KPlot::addTrace(string name, KMatrix x_km, KMatrix y_km){
@@ -84,8 +82,6 @@ void KPlot::addTrace(string name, KMatrix x_km, KMatrix y_km){
         
         mainWindow.getTab(0).getGraph(0, success).addTrace(name, *trace);
     }
-    
-    return success;
 }
 
 void KPlot::addTrace(KTrace t){
