@@ -27,14 +27,16 @@ using namespace std;
  
  Returns vector of ktraces
  */
-std::vector<KTrace> trim_ktrace(KTrace kt, double xMin, double xMax, double yMin, double yMax){
+std::vector<KTrace> trim_ktrace(KTrace kt, double xMin, double xMax, double yMin, double yMax){ //watch the divide by zeros! When x = 0, b calc goes to hell. Probably other divide by zero bugs too. May also be root of issue with tessellation b/c error occured at y-axis! Divide by zero like a wrecking crew - well that crew just wrecked the hell out of kpgraphics.
     
     std::vector<KTrace> traces;
     KTrace temp_trace;
     bool in_area = false;
     KPoint temp_pt;
-    double m; //slope
+    double m, b; //slope, y-intercept
     for (int i = 0 ; i < kt.points.size() ; i++){
+        cout << i << "\t " << kt.points[i].x  << " " << kt.points[i].y << endl;
+        
         if (in_area){
             if (kt.points[i].x > xMax || kt.points[i].x < xMin || kt.points[i].y < yMin || kt.points[i].y > yMax){ //outside area
                 //moved from in to outside area, calculate edge point and push back
@@ -42,25 +44,66 @@ std::vector<KTrace> trim_ktrace(KTrace kt, double xMin, double xMax, double yMin
                 //calculate edge point
                 if (kt.points[i].x > xMax){
                     temp_pt.x = xMax;
-                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
-                    temp_pt.y = m*xMax + (kt.points[i-1].y/(m*kt.points[i-1].x)); /*just y=mx+b*/
+                    m = ((kt.points[i].y-kt.points[i-1].y)/(kt.points[i].x-kt.points[i-1].x));
+                    if ((kt.points[i].x-kt.points[i-1].x) == 0){ //Case: ∆X = 0
+                        temp_pt.x = kt.points[i].x;
+                    }else{ //default
+                        if (kt.points[i-1].x == 0){ //Case: X_last = 0
+                            b = kt.points[i-1].y;
+                        }else{ //default
+                            b = (kt.points[i-1].y - (m*kt.points[i-1].x));
+                        }
+                        cout << "m: " << m << " xMax: " << xMax <<" b: " << b << endl;
+                        temp_pt.y = m*xMax + b; /*just y=mx+b*/
+                    }
                 }else if(kt.points[i].x < xMin){
                     temp_pt.x = xMin;
-                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
-                    temp_pt.y = m*xMin + (kt.points[i-1].y/(m*kt.points[i-1].x)); /*just y=mx+b*/
+                    m = ((kt.points[i].y-kt.points[i-1].y)/(kt.points[i].x-kt.points[i-1].x));
+                    if ((kt.points[i].x-kt.points[i-1].x) == 0){ //Case: ∆X = 0
+                        temp_pt.x = kt.points[i].x;
+                    }else{ //default
+                        if (kt.points[i-1].x == 0){ //Case: X_last = 0
+                            b = kt.points[i-1].y;
+                        }else{ //default
+                            b = (kt.points[i-1].y - (m*kt.points[i-1].x));
+                        }
+                        cout << "m: " << m << " xMax: " << xMax <<" b: " << b << endl;
+                        temp_pt.y = m*xMin + b; /*just y=mx+b*/
+                    }
                 }else if(kt.points[i].y < yMin){
-                    temp_pt.x = yMin;
-                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
-                    temp_pt.y = (yMin - (kt.points[i-1].y/(m*kt.points[i-1].x))); /*just y=mx+b -> x = (y-b)/m*/
+                    temp_pt.y = yMin;
+                    m = ((kt.points[i].y-kt.points[i-1].y)/(kt.points[i].x-kt.points[i-1].x));
+                    if ((kt.points[i].x-kt.points[i-1].x) == 0){ //Case: ∆X = 0
+                        temp_pt.x = kt.points[i].x;
+                    }else{ //default
+                        if (kt.points[i-1].x == 0){ //Case: X_last = 0
+                            b = kt.points[i-1].y;
+                        }else{ //default
+                            b = (kt.points[i-1].y - (m*kt.points[i-1].x));
+                        }
+                        cout << "m: " << m << " yMin: " << xMax <<" b: " << b << endl;
+                        temp_pt.x = (yMin - b)/m; /*just y=mx+b -> x = (y-b)/m*/
+                    }
                 }else{ //(kt.points[i].y > yMax) must be true
-                    temp_pt.x = yMax;
-                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
-                    temp_pt.y = (yMax - (kt.points[i-1].y/(m*kt.points[i-1].x))); /*just y=mx+b -> x = (y-b)/m*/
+                    temp_pt.y = yMax;
+                    m = ((kt.points[i].y-kt.points[i-1].y)/(kt.points[i].x-kt.points[i-1].x));
+                    if ((kt.points[i].x-kt.points[i-1].x) == 0){ //Case: ∆X = 0
+                        temp_pt.x = kt.points[i].x;
+                    }else{ //default
+                        if (kt.points[i-1].x == 0){ //Case: X_last = 0
+                            b = kt.points[i-1].y;
+                        }else{ //default
+                            b = (kt.points[i-1].y - (m*kt.points[i-1].x));
+                        }
+                        cout << "m: " << m << " yMin: " << xMax <<" b: " << b << endl;
+                        temp_pt.x = (yMax - b)/m; /*just y=mx+b -> x = (y-b)/m*/
+                    }
                 }
                 
                 in_area = false;
                 
                 //add calculated point to trace
+                cout << "\t\t" << temp_pt.x << " " << temp_pt.y << " " << m <<endl;
                 temp_trace.points.push_back(temp_pt);
                 traces.push_back(temp_trace);
             }else{
@@ -77,26 +120,68 @@ std::vector<KTrace> trim_ktrace(KTrace kt, double xMin, double xMax, double yMin
                 in_area = true;
                 
                 if (i > 0){
+                    
                     //calculate edge point
-                    if (kt.points[i].x > xMax){
+                    if (kt.points[i-1].x > xMax){
                         temp_pt.x = xMax;
-                        m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
-                        temp_pt.y = m*xMax + (kt.points[i-1].y/(m*kt.points[i-1].x)); /*just y=mx+b*/
-                    }else if(kt.points[i].x < xMin){
+                        m = ((kt.points[i].y-kt.points[i-1].y)/(kt.points[i].x-kt.points[i-1].x));
+                        if ((kt.points[i].x-kt.points[i-1].x) == 0){ //Case: ∆X = 0
+                            temp_pt.x = kt.points[i].x;
+                        }else{ //default
+                            if (kt.points[i-1].x == 0){ //Case: X_last = 0
+                                b = kt.points[i-1].y;
+                            }else{ //default
+                                b = (kt.points[i-1].y - (m*kt.points[i-1].x));
+                            }
+                            cout << "m: " << m << " xMax: " << xMax <<" b: " << b << endl;
+                            temp_pt.y = m*xMax + b; /*just y=mx+b*/
+                        }
+                    }else if(kt.points[i-1].x < xMin){
                         temp_pt.x = xMin;
-                        m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
-                        temp_pt.y = m*xMin + (kt.points[i-1].y/(m*kt.points[i-1].x)); /*just y=mx+b*/
-                    }else if(kt.points[i].y < yMin){
-                        temp_pt.x = yMin;
-                        m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
-                        temp_pt.y = (yMin - (kt.points[i-1].y/(m*kt.points[i-1].x))); /*just y=mx+b -> x = (y-b)/m*/
-                    }else{ //(kt.points[i].y > yMax) must be true
-                        temp_pt.x = yMax;
-                        m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
-                        temp_pt.y = (yMax - (kt.points[i-1].y/(m*kt.points[i-1].x))); /*just y=mx+b -> x = (y-b)/m*/
+                        m = ((kt.points[i].y-kt.points[i-1].y)/(kt.points[i].x-kt.points[i-1].x));
+                        if ((kt.points[i].x-kt.points[i-1].x) == 0){ //Case: ∆X = 0
+                            temp_pt.x = kt.points[i].x;
+                        }else{ //default
+                            if (kt.points[i-1].x == 0){ //Case: X_last = 0
+                                b = kt.points[i-1].y;
+                            }else{ //default
+                                b = (kt.points[i-1].y - (m*kt.points[i-1].x));
+                            }
+                            cout << "m: " << m << " xMax: " << xMax <<" b: " << b << endl;
+                            temp_pt.y = m*xMin + b; /*just y=mx+b*/
+                        }
+                    }else if(kt.points[i-1].y < yMin){
+                        temp_pt.y = yMin;
+                        m = ((kt.points[i].y-kt.points[i-1].y)/(kt.points[i].x-kt.points[i-1].x));
+                        if ((kt.points[i].x-kt.points[i-1].x) == 0){ //Case: ∆X = 0
+                            temp_pt.x = kt.points[i].x;
+                        }else{ //default
+                            if (kt.points[i-1].x == 0){ //Case: X_last = 0
+                                b = kt.points[i-1].y;
+                            }else{ //default
+                                b = (kt.points[i-1].y - (m*kt.points[i-1].x));
+                            }
+                            cout << "m: " << m << " yMin: " << xMax <<" b: " << b << endl;
+                            temp_pt.x = (yMin - b)/m; /*just y=mx+b -> x = (y-b)/m*/
+                        }
+                    }else{ //(kt.points[i-1].y > yMax) must be true
+                        temp_pt.y = yMax;
+                        m = ((kt.points[i].y-kt.points[i-1].y)/(kt.points[i].x-kt.points[i-1].x));
+                        if ((kt.points[i].x-kt.points[i-1].x) == 0){ //Case: ∆X = 0
+                            temp_pt.x = kt.points[i].x;
+                        }else{ //default
+                            if (kt.points[i-1].x == 0){ //Case: X_last = 0
+                                b = kt.points[i-1].y;
+                            }else{ //default
+                                b = (kt.points[i-1].y - (m*kt.points[i-1].x));
+                            }
+                            cout << "m: " << m << " yMin: " << xMax <<" b: " << b << endl;
+                            temp_pt.x = (yMax - b)/m; /*just y=mx+b -> x = (y-b)/m*/
+                        }
                     }
                     
                     //add calculated and actual point to trace
+                    cout << "\t\t" << temp_pt.x << " " << temp_pt.y << " " << m << endl;
                     temp_trace.points.push_back(temp_pt);
                     temp_trace.points.push_back(kt.points[i]);
                 }else{ //Is first point - started inside region - no point calculation required

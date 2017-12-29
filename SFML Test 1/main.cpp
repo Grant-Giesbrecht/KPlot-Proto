@@ -192,13 +192,13 @@ int main(int, char const**){
     kpw4.set(KP_SET_WSTYLE, KP_WSTYLE_CLASSIC);*/
     
 //    KMatrix km("0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10");
-    KMatrix km("100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110;1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10");
-    KPlot kp("Trace1", km);
-    kp.setBounds(100, 110, 0, 10);
-    if (!kp.setTraceColor("Trace1", sf::Color::Red));
+//    KMatrix km("100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110;1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10");
+//    KPlot kp("Trace1", km);
+//    kp.setBounds(100, 110, 0, 10);
+//    if (!kp.setTraceColor("Trace1", sf::Color::Red));
     
-    KMatrix kmX("0, 2, 6, 2, 0, -2, -6, -2, 0");
-    KMatrix kmY("6, 2, 0, -2, -6, -2, 0, 2, 6");
+    KMatrix kmX("0, 2, 8, 2, 0, -2, -8, -2, 0");
+    KMatrix kmY("8, 2, 0, -2, -8, -2, 0, 2, 8");
     KPlot kp2("Trace1", kmX, kmY);
     kp2.setBounds(-5, 5, -5, 5);
 //    kp2.setBounds(-10, 10, -10, 10);
