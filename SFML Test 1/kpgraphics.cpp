@@ -17,12 +17,87 @@
 using namespace std;
 
 /*
+ Converts a single KTrace into a vector of KTraces so all traces are contained within the bound area. TODO: Won't yet register when trace passes through region without having any points land in it.
  
+ KTrace - ktrace to trim
+ xMin - x lower bound
+ xMax - x upper bound
+ yMin - y lower bound
+ yMax - y upper bound
+ 
+ Returns vector of ktraces
  */
-void trim_ktrace(KTrace& kt, double xMin, double xMax, double yMin, double yMax){
+std::vector<KTrace> trim_ktrace(KTrace kt, double xMin, double xMax, double yMin, double yMax){
+    
+    std::vector<KTrace> traces;
+    KTrace temp_trace;
+    bool in_area = false;
+    KPoint temp_pt;
+    double m; //slope
     for (int i = 0 ; i < kt.points.size() ; i++){
-        if (kt.points[i].x > xMax || kt.points[i].x < xMin || kt.points[i].y < yMin || kt.points[i].y > yMax){
-            
+        if (in_area){
+            if (kt.points[i].x > xMax || kt.points[i].x < xMin || kt.points[i].y < yMin || kt.points[i].y > yMax){ //outside area
+                //moved from in to outside area, calculate edge point and push back
+                
+                //calculate edge point
+                if (kt.points[i].x > xMax){
+                    temp_pt.x = xMax;
+                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
+                    temp_pt.y = m*xMax + (kt.points[i-1].y/(m*kt.points[i-1].x)); /*just y=mx+b*/
+                }else if(kt.points[i].x < xMin){
+                    temp_pt.x = xMin;
+                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
+                    temp_pt.y = m*xMin + (kt.points[i-1].y/(m*kt.points[i-1].x)); /*just y=mx+b*/
+                }else if(kt.points[i].y < yMin){
+                    temp_pt.x = yMin;
+                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
+                    temp_pt.y = (yMin - (kt.points[i-1].y/(m*kt.points[i-1].x))); /*just y=mx+b -> x = (y-b)/m*/
+                }else{ //(kt.points[i].y > yMax) must be true
+                    temp_pt.x = yMax;
+                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
+                    temp_pt.y = (yMax - (kt.points[i-1].y/(m*kt.points[i-1].x))); /*just y=mx+b -> x = (y-b)/m*/
+                }
+                
+                in_area = false;
+                
+                //add calculated point to trace
+                temp_trace.points.push_back(temp_pt);
+            }else{
+                //Was and still is in area, record point
+                temp_trace.points.push_back(kt.points[i]);
+            }
+        }else{
+            if (kt.points[i].x > xMax || kt.points[i].x < xMin || kt.points[i].y < yMin || kt.points[i].y > yMax){ //outside area
+                //do nothing
+            }else{
+                //moved from outside to inside, calculate edge point and start new trace
+                
+                //calculate edge point
+                if (kt.points[i].x > xMax){
+                    temp_pt.x = xMax;
+                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
+                    temp_pt.y = m*xMax + (kt.points[i-1].y/(m*kt.points[i-1].x)); /*just y=mx+b*/
+                }else if(kt.points[i].x < xMin){
+                    temp_pt.x = xMin;
+                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
+                    temp_pt.y = m*xMin + (kt.points[i-1].y/(m*kt.points[i-1].x)); /*just y=mx+b*/
+                }else if(kt.points[i].y < yMin){
+                    temp_pt.x = yMin;
+                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
+                    temp_pt.y = (yMin - (kt.points[i-1].y/(m*kt.points[i-1].x))); /*just y=mx+b -> x = (y-b)/m*/
+                }else{ //(kt.points[i].y > yMax) must be true
+                    temp_pt.x = yMax;
+                    m = (kt.points[i].y-kt.points[i-1].y/(kt.points[i].x-kt.points[i-1].x));
+                    temp_pt.y = (yMax - (kt.points[i-1].y/(m*kt.points[i-1].x))); /*just y=mx+b -> x = (y-b)/m*/
+                }
+                
+                temp_trace.points.clear();
+                in_area = true;
+                
+                //add calculated and actual point to trace
+                temp_trace.points.push_back(temp_pt);
+                temp_trace.points.push_back(kt.points[i]);
+            }
         }
     }
 }

@@ -473,7 +473,7 @@ void KPlotTab::draw_graph(sf::RenderWindow& window, int left_bound, int right_bo
     
     //======================================== Draw Labels =========================================================
     
-    std::cout << "Xmin: " << kg.x_min << " Xmax: " << kg.x_max << " tick_size: " << kg.xtick_num << std::endl;
+//    std::cout << "Xmin: " << kg.x_min << " Xmax: " << kg.x_max << " tick_size: " << kg.xtick_num << std::endl;
     
     
     //Neg X axes
@@ -555,9 +555,12 @@ void KPlotTab::draw_trace(KTrace& kt, axes_conversion& ac, std::vector<std::shar
     //std::c out << "drawing trace now" << std::endl;
     
     if (kt.type() == KT_TYPE_LINE){
-        drawptr tr = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
-        tes_to_vertexarray(tessellate_line(scale_trace(kt, ac), kt.thickness())/*pts_temp*/, tr, kt.trace_color);
-        drawings.push_back(tr);
+        std::vector<KTrace> trace_segments = trim_ktrace(kt, ac.left_val, ac.right_val, ac.low_val, ac.top_val);
+        for(int i = 0 ; i < trace_segments.size() ; i++){
+            drawptr tr = std::shared_ptr<sf::VertexArray>(new sf::VertexArray);
+            tes_to_vertexarray(tessellate_line(scale_trace(trace_segments[i], ac), kt.thickness())/*pts_temp*/, tr, kt.trace_color);
+            drawings.push_back(tr);
+        }
     }else if(kt.type() == KT_TYPE_POINT){
         switch (kt.style()) {
             case KT_STYLE_STD:{
