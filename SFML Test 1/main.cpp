@@ -196,6 +196,13 @@ int main(int, char const**){
     KPlot kp("Trace1", km);
     kp.setBounds(100, 110, 0, 10);
     if (!kp.setTraceColor("Trace1", sf::Color::Red));
+    
+    KMatrix kmX("0, 2, 6, 2, 0, -2, -6, -2, 0");
+    KMatrix kmY("6, 2, 0, -2, -6, -2, 0, 2, 6");
+    KPlot kp2("Trace1", kmX, kmY);
+    kp2.setBounds(-5, 5, -5, 5);
+//    kp2.setBounds(-10, 10, -10, 10);
+    if (!kp2.setTraceColor("Trace1", sf::Color::Red));
 //    kp.setWindowSize(desktop.height, desktop.height*.75);
 //    kp.setTraceColor("Trace1", KP_COLOR_ORANGE);
 //    kp.setWindowStyle(KP_WSTYLE_CLASSIC);
