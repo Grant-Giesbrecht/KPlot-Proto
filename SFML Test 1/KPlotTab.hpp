@@ -27,12 +27,6 @@
 #include "KGraph.hpp"
 #include "kpgraphics.hpp"
 
-#define KP_WSTYLE_CLASSIC_SIMPLEX 4
-#define KP_WSTYLE_CLASSIC 0
-#define KP_WSTYLE_LIGHT 1
-#define KP_WSTYLE_BLUEWAVE 2
-#define KP_WSTYLE_OKUDAGRAM 3
-
 class KPlotTab{
 public:
     //Constructors
@@ -44,6 +38,9 @@ public:
     bool deleteGraph(std::string title);
     KGraph& getGraph(int idx, bool& success);
     KGraph& getGraph(std::string title, bool& success);
+    
+    //Get property
+    int numGraphs();
     
     //Set layout
     void layout_dimensions(int nrows, int ncols);

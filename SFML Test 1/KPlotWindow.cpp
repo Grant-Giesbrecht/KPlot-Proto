@@ -45,11 +45,13 @@ KPlotWindow::KPlotWindow(int nwidth, int nheight, std::string title) : scan_even
     univ_id = all_windows.size()-1;
     all_windows_mutex.unlock();
     
-//    sf::Image icon;
-//    if (!icon.loadFromFile(resourcePath() + "IEGA_Oval_Logo_Border.png")) {
-////        return EXIT_FAILURE;
-//    }
-//    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    sf::Image icon;
+    if (!icon.loadFromFile(string(APPICON_PATH) + "IEGA_Oval_Logo_Border.png")) {
+//        return EXIT_FAILURE;
+    }else{
+        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    }
+    
     
     std::lock_guard<std::mutex> guard(mtx);
     show_toolbar = true;
@@ -252,6 +254,16 @@ void KPlotWindow::set(int prop, int val){
         case(KP_SET_WSTYLE):{
                 lock_guard<std::mutex> guard(mtx);
                 window_style = val;
+                for (int t = 0 ; t < tabs.size() ; t++){
+                    for (int g = 0; g < tabs[t].numGraphs() ; g++){
+                        bool success;
+                        tabs[t].getGraph(g, success); //Just ensure graph is available
+                        if (success){
+                            implement_style(window_style, tabs[t].getGraph(g, success).options); //Overwrite graph settings with new settings
+                        }
+                    }
+                }
+            
             }
             break;
     }

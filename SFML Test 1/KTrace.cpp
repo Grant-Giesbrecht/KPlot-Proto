@@ -30,6 +30,8 @@ KTrace::KTrace(){
     
     KTrace::trace_thickness = 3;
     
+    use_secondary_axis = false;
+    
     trace_name = "Trace";
 }
 
@@ -47,6 +49,8 @@ KTrace::KTrace(std::vector<KPoint> new_vals){
     trace_style = KT_STYLE_STD;
     
     KTrace::trace_thickness = 3;
+    
+    use_secondary_axis = false;
     
     trace_name = "Trace";
 }
@@ -66,6 +70,8 @@ KTrace::KTrace(std::vector<KPoint> new_vals, sf::Color nc){
     trace_style = KT_STYLE_STD;
     
     KTrace::trace_thickness = 3;
+    
+    use_secondary_axis = false;
     
     trace_name = "Trace";
 }
@@ -87,6 +93,8 @@ KTrace::KTrace(std::vector<KPoint> new_vals, std::vector<sf::Color> new_colors, 
     
     KTrace::trace_thickness = 3;
     
+    use_secondary_axis = false;
+    
     trace_name = "Trace";
 }
 
@@ -106,6 +114,8 @@ KTrace::KTrace(std::vector<KPoint> new_vals, std::vector<double> new_field_vals,
     trace_style = KT_STYLE_STD;
     
     KTrace::trace_thickness = 3;
+    
+    use_secondary_axis = false;
     
     trace_name = "Trace";
 }

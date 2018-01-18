@@ -10,7 +10,6 @@
 		0D1ADAC41F65BE3F004CA760 /* KV1_Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0D1ADAC31F65BE3F004CA760 /* KV1_Icon.icns */; };
 		0D1ADAC81F65BE77004CA760 /* IEGA App Logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0D1ADAC71F65BE77004CA760 /* IEGA App Logo.icns */; };
 		0D6BA7461F6C8EEF0047619C /* KPlotTab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFA77071F6626D8007FC429 /* KPlotTab.cpp */; };
-		0D78015B1F646FC400D297A9 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D78015A1F646FC400D297A9 /* ResourcePath.mm */; };
 		0D78015E1F646FC400D297A9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D78015D1F646FC400D297A9 /* main.cpp */; };
 		0D7801611F646FC400D297A9 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D7801601F646FC400D297A9 /* cute_image.jpg */; };
 		0D7801631F646FC400D297A9 /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 0D7801621F646FC400D297A9 /* nice_music.ogg */; };
@@ -31,6 +30,7 @@
 		0DFA77101F662CC3007FC429 /* Iega_Oval_Logo_Border.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA770F1F662CC3007FC429 /* Iega_Oval_Logo_Border.icns */; };
 		0DFA77121F662D02007FC429 /* Iega_Oval_Logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA77111F662D02007FC429 /* Iega_Oval_Logo.icns */; };
 		0DFA77141F662D18007FC429 /* Iega_Oval_Logo_Border.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DFA77131F662D18007FC429 /* Iega_Oval_Logo_Border.png */; };
+		0DFE96B12009DCE200675D16 /* resourcePath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFE96B02009DCE200675D16 /* resourcePath.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +38,6 @@
 		0D1ADAC71F65BE77004CA760 /* IEGA App Logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "IEGA App Logo.icns"; sourceTree = "<group>"; };
 		0D7801551F646FC400D297A9 /* SFML Test 1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SFML Test 1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D7801591F646FC400D297A9 /* SFML Test 1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SFML Test 1-Info.plist"; sourceTree = "<group>"; };
-		0D78015A1F646FC400D297A9 /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
-		0D78015C1F646FC400D297A9 /* ResourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
 		0D78015D1F646FC400D297A9 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		0D7801601F646FC400D297A9 /* cute_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cute_image.jpg; sourceTree = "<group>"; };
 		0D7801621F646FC400D297A9 /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
@@ -70,6 +68,9 @@
 		0DFA770F1F662CC3007FC429 /* Iega_Oval_Logo_Border.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Iega_Oval_Logo_Border.icns; sourceTree = "<group>"; };
 		0DFA77111F662D02007FC429 /* Iega_Oval_Logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Iega_Oval_Logo.icns; sourceTree = "<group>"; };
 		0DFA77131F662D18007FC429 /* Iega_Oval_Logo_Border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Iega_Oval_Logo_Border.png; sourceTree = "<group>"; };
+		0DFE96B02009DCE200675D16 /* resourcePath.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resourcePath.cpp; sourceTree = "<group>"; };
+		0DFE96B22009DD2D00675D16 /* resourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = resourcePath.hpp; sourceTree = "<group>"; };
+		0DFE96B32009E3CF00675D16 /* kpcolors.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = kpcolors.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,13 +103,14 @@
 		0D7801571F646FC400D297A9 /* SFML Test 1 */ = {
 			isa = PBXGroup;
 			children = (
-				0D78015A1F646FC400D297A9 /* ResourcePath.mm */,
-				0D78015C1F646FC400D297A9 /* ResourcePath.hpp */,
 				0D78015D1F646FC400D297A9 /* main.cpp */,
+				0DFE96B02009DCE200675D16 /* resourcePath.cpp */,
+				0DFE96B22009DD2D00675D16 /* resourcePath.hpp */,
 				0DB7EC641F67330400EF2D77 /* kpgraphics.cpp */,
 				0DB7EC651F67330400EF2D77 /* kpgraphics.hpp */,
 				0DEA28951F89B2E500BDDCBA /* KPlot.cpp */,
 				0DEA28961F89B2E500BDDCBA /* KPlot.hpp */,
+				0DFE96B32009E3CF00675D16 /* kpcolors.hpp */,
 				0DFA770A1F662786007FC429 /* KPlotWindow.cpp */,
 				0DFA770B1F662786007FC429 /* KPlotWindow.hpp */,
 				0DFA77071F6626D8007FC429 /* KPlotTab.cpp */,
@@ -256,6 +258,7 @@
 			files = (
 				0DEA289D1F89B38C00BDDCBA /* KMatrix.cpp in Sources */,
 				0DCE0A001F64803500D52FE2 /* KGraph.cpp in Sources */,
+				0DFE96B12009DCE200675D16 /* resourcePath.cpp in Sources */,
 				0DB7EC661F67330400EF2D77 /* kpgraphics.cpp in Sources */,
 				0D6BA7461F6C8EEF0047619C /* KPlotTab.cpp in Sources */,
 				0DEA28A51F89B44A00BDDCBA /* stdutil.cpp in Sources */,
@@ -264,7 +267,6 @@
 				0D78015E1F646FC400D297A9 /* main.cpp in Sources */,
 				0DEA28A41F89B44A00BDDCBA /* string_manip.cpp in Sources */,
 				0DFA770C1F662786007FC429 /* KPlotWindow.cpp in Sources */,
-				0D78015B1F646FC400D297A9 /* ResourcePath.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

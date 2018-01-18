@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SFML Test 1/kpgraphics.cpp"
-            timestampString = "536251802.13324"
+            timestampString = "538011234.229926"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "trim_ktrace(KTrace kt, double xMin, double xMax, double yMin, double yMax)"
             landmarkType = "9">
          </BreakpointContent>

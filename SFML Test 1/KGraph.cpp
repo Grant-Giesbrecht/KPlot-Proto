@@ -9,6 +9,8 @@
 #include "KGraph.hpp"
 #include <iostream> //for debugging only
 
+#include "resourcePath.hpp"
+
 /*
  Constructor
  */
@@ -37,22 +39,8 @@ KGraph::KGraph(){ //NO initializer list required for void_trace because no argum
     y_label = "Y-Axis";
     title = "Title";
     
-    //Default colors
-    background_color = sf::Color(250, 250, 250);
-    axes_color = sf::Color::Black;
-    title_color = sf::Color::Black;
-    grid_color = sf::Color(150, 150, 150);
-    legend_background = sf::Color::White;
-    
-    if (!main_font.loadFromFile(resourcePath() + "sansation.ttf")) {
-//        return EXIT_FAILURE;
-    }
-    
-    if (!tick_font.loadFromFile(resourcePath() + "sansation.ttf")) {
-//        return EXIT_FAILURE;
-    }
-    
-    show_legend = false;
+    //Initialize options
+    implement_style(KP_WSTYLE_CLASSIC, options);
     
     r_tl = -1;
     c_tl = -1;
@@ -127,7 +115,7 @@ KTrace& KGraph::getTrace(std::string search_name, bool& success){
  */
 void KGraph::setFont(sf::Font nf){ //For axes and title and legend
     
-    main_font = nf;
+    options.main_font = nf;
     
 }
 
@@ -162,7 +150,7 @@ void KGraph::set(int prop, bool val){ //Set specified property
     
     switch (prop) {
         case KG_PROP_LEGEND_ON:
-            show_legend = val;
+            options.show_legend = val;
             break;
         default:
             break;
@@ -190,8 +178,328 @@ std::string KGraph::getTitle(){
     return title;
 }
 
-
-
+/*
+ Overwrites 'options' with the preferences associated with 'style'.
+ 
+ options - struct containing graph style options to be overwritten
+ style - new style to write into 'options'
+ 
+ Void return
+ */
+void implement_style(int style, graph_style_options& options){
+    
+    switch(style){
+        case(KP_WSTYLE_CLASSIC):
+            options.draw_small_grid = true;
+            options.draw_big_grid = true;
+            options.draw_axis_small_ticks = false;
+            options.draw_axis_big_ticks = false;
+            options.draw_x_axis = true;
+            options.draw_y_axis = true;
+            options.draw_graph_border = true;
+            options.draw_in_graph_numerals_x = false;
+            options.draw_in_graph_numerals_y = false;
+            options.draw_exterior_x_numerals = true;
+            options.draw_exterior_y_numerals = true;
+            options.draw_secondary_in_graph_numerals_x = false;
+            options.draw_secondary_in_graph_numerals_y = false;
+            options.draw_secondary_exterior_x_numerals = false;
+            options.draw_secondary_exterior_y_numerals = false;
+            options.show_legend = false;
+            
+            options.small_grid_color = sf::Color(60, 60, 60);
+            options.big_grid_color = sf::Color(30, 30, 30);
+            options.axes_color = sf::Color::Black;
+            options.border_color = sf::Color::Black;
+            options.background_color = sf::Color(255, 255, 255);
+            options.label_color = sf::Color::Black;
+            options.title_color = sf::Color::Black;
+            options.grid_color = sf::Color(150, 150, 150);
+            options.legend_background = sf::Color::White;
+            
+            options.small_grid_thickness = 1;
+            options.big_grid_thickness = 2;
+            options.small_tick_thickness = 1;
+            options.small_tick_length = 2;
+            options.big_tick_thickness = 1;
+            options.big_tick_length = 5;
+            options.axes_thickness = 3;
+            options.border_thickness = 2;
+            options.label_font_size = 25;
+            options.title_font_size = 32;
+            options.x_label_offset = 3;
+            options.y_label_offset = 6;
+            options.x_numeral_height_exterior = 20;
+            options.y_numeral_height_exterior = 20;
+            options.x_sec_label_offset = 3;
+            options.y_sec_label_offset = 3;
+            options.title_offset = 3;
+            options.x_label_margin = 35;
+            options.y_label_margin = 35;
+            options.x_sec_label_margin = 35;
+            options.y_sec_label_margin = 35;
+            
+            if (!options.main_font.loadFromFile(std::string(FONT_PATH) + std::string("sansation.ttf"))) {
+                //        return EXIT_FAILURE;
+            }
+            
+            if (!options.main_font.loadFromFile(std::string(FONT_PATH) + std::string("Aileron-Regular.otf"))) {
+                //        return EXIT_FAILURE;
+            }
+            
+//            if (!options.main_font.loadFromFile(std::string(SYSTEM_FONT_PATH) + std::string("Arial.ttf"))) {
+//                //        return EXIT_FAILURE;
+//            }
+            
+            if (!options.tick_font.loadFromFile(std::string(FONT_PATH) + "sansation.ttf")) {
+                //        return EXIT_FAILURE;
+            }
+            
+            break;
+        case(KP_WSTYLE_CLASSIC_SIMPLEX): //same as classic for now
+            options.draw_small_grid = true;
+            options.draw_big_grid = true;
+            options.draw_axis_small_ticks = false;
+            options.draw_axis_big_ticks = false;
+            options.draw_x_axis = true;
+            options.draw_y_axis = true;
+            options.draw_graph_border = true;
+            options.draw_in_graph_numerals_x = false;
+            options.draw_in_graph_numerals_y = false;
+            options.draw_exterior_x_numerals = true;
+            options.draw_exterior_y_numerals = true;
+            options.draw_secondary_in_graph_numerals_x = false;
+            options.draw_secondary_in_graph_numerals_y = false;
+            options.draw_secondary_exterior_x_numerals = false;
+            options.draw_secondary_exterior_y_numerals = false;
+            options.show_legend = false;
+            
+            options.small_grid_color = sf::Color(60, 60, 60);
+            options.big_grid_color = sf::Color(30, 30, 30);
+            options.axes_color = sf::Color::Black;
+            options.border_color = sf::Color::Black;
+            options.background_color = sf::Color(255, 255, 255);
+            options.label_color = sf::Color::Black;
+            options.title_color = sf::Color::Black;
+            options.grid_color = sf::Color(150, 150, 150);
+            options.legend_background = sf::Color::White;
+            
+            options.small_grid_thickness = 1;
+            options.big_grid_thickness = 2;
+            options.small_tick_thickness = 1;
+            options.small_tick_length = 2;
+            options.big_tick_thickness = 1;
+            options.big_tick_length = 5;
+            options.axes_thickness = 3;
+            options.border_thickness = 2;
+            options.label_font_size = 25;
+            options.title_font_size = 32;
+            options.x_label_offset = 3;
+            options.y_label_offset = 3;
+            options.x_numeral_height_exterior = 20;
+            options.y_numeral_height_exterior = 20;
+            options.x_sec_label_offset = 3;
+            options.y_sec_label_offset = 3;
+            options.title_offset = 3;
+            options.x_label_margin = 35;
+            options.y_label_margin = 35;
+            options.x_sec_label_margin = 35;
+            options.y_sec_label_margin = 35;
+            
+            if (!options.main_font.loadFromFile(std::string(FONT_PATH) + std::string("sansation.ttf"))) {
+                //        return EXIT_FAILURE;
+            }
+            
+            if (!options.tick_font.loadFromFile(std::string(FONT_PATH) + "sansation.ttf")) {
+                //        return EXIT_FAILURE;
+            }
+            
+            break;
+        case(KP_WSTYLE_LIGHT): //Classic without the grid
+            options.draw_small_grid = false;
+            options.draw_big_grid = false;
+            options.draw_axis_small_ticks = true;
+            options.draw_axis_big_ticks = true;
+            options.draw_x_axis = true;
+            options.draw_y_axis = true;
+            options.draw_graph_border = true;
+            options.draw_in_graph_numerals_x = false;
+            options.draw_in_graph_numerals_y = false;
+            options.draw_exterior_x_numerals = true;
+            options.draw_exterior_y_numerals = true;
+            options.draw_secondary_in_graph_numerals_x = false;
+            options.draw_secondary_in_graph_numerals_y = false;
+            options.draw_secondary_exterior_x_numerals = false;
+            options.draw_secondary_exterior_y_numerals = false;
+            options.show_legend = false;
+            
+            options.small_grid_color = sf::Color(60, 60, 60);
+            options.big_grid_color = sf::Color(30, 30, 30);
+            options.axes_color = sf::Color::Black;
+            options.border_color = sf::Color::Black;
+            options.background_color = sf::Color(255, 255, 255);
+            options.label_color = sf::Color::Black;
+            options.title_color = sf::Color::Black;
+            options.grid_color = sf::Color(150, 150, 150);
+            options.legend_background = sf::Color::White;
+            
+            options.small_grid_thickness = 1;
+            options.big_grid_thickness = 2;
+            options.small_tick_thickness = 1;
+            options.small_tick_length = 2;
+            options.big_tick_thickness = 1;
+            options.big_tick_length = 5;
+            options.axes_thickness = 3;
+            options.border_thickness = 2;
+            options.label_font_size = 25;
+            options.title_font_size = 32;
+            options.x_label_offset = 3;
+            options.y_label_offset = 3;
+            options.x_numeral_height_exterior = 20;
+            options.y_numeral_height_exterior = 20;
+            options.x_sec_label_offset = 3;
+            options.y_sec_label_offset = 3;
+            options.title_offset = 3;
+            options.x_label_margin = 35;
+            options.y_label_margin = 35;
+            options.x_sec_label_margin = 35;
+            options.y_sec_label_margin = 35;
+            
+            if (!options.main_font.loadFromFile(std::string(FONT_PATH) + std::string("sansation.ttf"))) {
+                //        return EXIT_FAILURE;
+            }
+            
+            if (!options.tick_font.loadFromFile(std::string(FONT_PATH) + "sansation.ttf")) {
+                //        return EXIT_FAILURE;
+            }
+            
+            break;
+        case(KP_WSTYLE_BLUEWAVE):
+            options.draw_small_grid = true;
+            options.draw_big_grid = true;
+            options.draw_axis_small_ticks = false;
+            options.draw_axis_big_ticks = false;
+            options.draw_x_axis = true;
+            options.draw_y_axis = true;
+            options.draw_graph_border = true;
+            options.draw_in_graph_numerals_x = false;
+            options.draw_in_graph_numerals_y = false;
+            options.draw_exterior_x_numerals = true;
+            options.draw_exterior_y_numerals = true;
+            options.draw_secondary_in_graph_numerals_x = false;
+            options.draw_secondary_in_graph_numerals_y = false;
+            options.draw_secondary_exterior_x_numerals = false;
+            options.draw_secondary_exterior_y_numerals = false;
+            options.show_legend = false;
+            
+            options.small_grid_color = sf::Color(30, 35, 120);
+            options.big_grid_color = sf::Color(50, 55, 150);
+            options.axes_color = sf::Color(80, 85, 220);
+            options.border_color = sf::Color(80, 85, 220);
+            options.background_color = sf::Color(165, 170, 200);
+            options.label_color = sf::Color::Black;
+            options.title_color = sf::Color::Black;
+            options.grid_color = sf::Color(150, 150, 150);
+            options.legend_background = sf::Color::White;
+            
+            options.small_grid_thickness = 1;
+            options.big_grid_thickness = 2;
+            options.small_tick_thickness = 1;
+            options.small_tick_length = 2;
+            options.big_tick_thickness = 1;
+            options.big_tick_length = 5;
+            options.axes_thickness = 3;
+            options.border_thickness = 2;
+            options.label_font_size = 25;
+            options.title_font_size = 32;
+            options.x_label_offset = 3;
+            options.y_label_offset = 3;
+            options.x_numeral_height_exterior = 20;
+            options.y_numeral_height_exterior = 20;
+            options.x_sec_label_offset = 3;
+            options.y_sec_label_offset = 3;
+            options.title_offset = 3;
+            options.x_label_margin = 35;
+            options.y_label_margin = 35;
+            options.x_sec_label_margin = 35;
+            options.y_sec_label_margin = 35;
+            
+            if (!options.main_font.loadFromFile(std::string(FONT_PATH) + std::string("sansation.ttf"))) {
+                //        return EXIT_FAILURE;
+            }
+            
+            if (!options.tick_font.loadFromFile(std::string(FONT_PATH) + "sansation.ttf")) {
+                //        return EXIT_FAILURE;
+            }
+            
+            break;
+        case(KP_WSTYLE_OKUDAGRAM): //same as classic for now
+            options.draw_small_grid = true;
+            options.draw_big_grid = true;
+            options.draw_axis_small_ticks = false;
+            options.draw_axis_big_ticks = false;
+            options.draw_x_axis = true;
+            options.draw_y_axis = true;
+            options.draw_graph_border = true;
+            options.draw_in_graph_numerals_x = false;
+            options.draw_in_graph_numerals_y = false;
+            options.draw_exterior_x_numerals = true;
+            options.draw_exterior_y_numerals = true;
+            options.draw_secondary_in_graph_numerals_x = false;
+            options.draw_secondary_in_graph_numerals_y = false;
+            options.draw_secondary_exterior_x_numerals = false;
+            options.draw_secondary_exterior_y_numerals = false;
+            options.show_legend = false;
+            
+            options.small_grid_color = sf::Color(60, 60, 60);
+            options.big_grid_color = sf::Color(30, 30, 30);
+            options.axes_color = sf::Color::Black;
+            options.border_color = sf::Color::Black;
+            options.background_color = sf::Color(255, 255, 255);
+            options.label_color = sf::Color::Black;
+            options.title_color = sf::Color::Black;
+            options.grid_color = sf::Color(150, 150, 150);
+            options.legend_background = sf::Color::White;
+            
+            options.small_grid_thickness = 1;
+            options.big_grid_thickness = 2;
+            options.small_tick_thickness = 1;
+            options.small_tick_length = 2;
+            options.big_tick_thickness = 1;
+            options.big_tick_length = 5;
+            options.axes_thickness = 3;
+            options.border_thickness = 2;
+            options.label_font_size = 25;
+            options.title_font_size = 32;
+            options.x_label_offset = 3;
+            options.y_label_offset = 3;
+            options.x_numeral_height_exterior = 20;
+            options.y_numeral_height_exterior = 20;
+            options.x_sec_label_offset = 3;
+            options.y_sec_label_offset = 3;
+            options.title_offset = 3;
+            options.x_label_margin = 35;
+            options.y_label_margin = 35;
+            options.x_sec_label_margin = 35;
+            options.y_sec_label_margin = 35;
+            
+            if (!options.main_font.loadFromFile(std::string(FONT_PATH) + std::string("sansation.ttf"))) {
+                //        return EXIT_FAILURE;
+            }
+            
+            if (!options.tick_font.loadFromFile(std::string(FONT_PATH) + "sansation.ttf")) {
+                //        return EXIT_FAILURE;
+            }
+            
+            break;
+    }
+    
+}
+//#define KP_WSTYLE_CLASSIC_SIMPLEX 4
+//#define KP_WSTYLE_CLASSIC 0
+//#define KP_WSTYLE_LIGHT 1
+//#define KP_WSTYLE_BLUEWAVE 2
+//#define KP_WSTYLE_OKUDAGRAM 3
 
 
 

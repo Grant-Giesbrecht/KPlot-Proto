@@ -30,6 +30,7 @@ using namespace std;
 std::vector<KTrace> trim_ktrace(KTrace kt, double xMin, double xMax, double yMin, double yMax){ //watch the divide by zeros! When x = 0, b calc goes to hell. Probably other divide by zero bugs too. May also be root of issue with tessellation b/c error occured at y-axis! Divide by zero like a wrecking crew - well that crew just wrecked the hell out of kpgraphics.
     
     std::vector<KTrace> traces;
+    vector<KTrace> returned_traces;
     KTrace temp_trace;
     bool in_area = false;
     KPoint temp_pt;
@@ -102,10 +103,19 @@ std::vector<KTrace> trim_ktrace(KTrace kt, double xMin, double xMax, double yMin
                 
                 in_area = false;
                 
-                //add calculated point to trace
+                //add calculated point to trace via standard procedure
                 cout << "\t\t" << temp_pt.x << " " << temp_pt.y << " " << m <<endl;
                 temp_trace.points.push_back(temp_pt);
-                traces.push_back(temp_trace);
+                
+                //If a line enters or exits the graph are by violating two boundaries (exceeds x&y max, for example),
+                //only one of the violations will be fixed. We loop through the new trace again to ensure all is well
+                //and that any multi-bound violations are fully corrected.
+                returned_traces = trim_ktrace(temp_trace, xMin, xMax, yMin, yMax);
+                for (int a = 0 ; a < returned_traces.size() ; a++){
+                    traces.push_back(returned_traces[a]);
+                }
+                
+                
             }else{
                 //Was and still is in area, record point
                 temp_trace.points.push_back(kt.points[i]);

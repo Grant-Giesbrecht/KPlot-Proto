@@ -36,6 +36,13 @@
 #define KT_STYLE_SQUARE 8
 #define KT_STYLE_OCTOGON 9
 
+//Window styles
+#define KP_WSTYLE_CLASSIC_SIMPLEX 4 //Default without GUI
+#define KP_WSTYLE_CLASSIC 0 //Default
+#define KP_WSTYLE_LIGHT 1 //Grid-free
+#define KP_WSTYLE_BLUEWAVE 2 //Very blue
+#define KP_WSTYLE_OKUDAGRAM 3
+
 typedef struct{
     double x;
     double y;
@@ -74,6 +81,7 @@ public:
     std::string name();
     
     sf::Color trace_color;
+    bool use_secondary_axis;
     
     std::vector<KPoint> points;
     std::vector<sf::Color> field_color; //Only for FIELD

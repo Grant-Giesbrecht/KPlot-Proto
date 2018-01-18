@@ -18,7 +18,7 @@
 #include <SFML/Graphics.hpp>
 
 // Here is a small helper for you! Have a look.
-#include "ResourcePath.hpp"
+#include "resourcePath.hpp"
 
 #include <iostream>
 #include <stdio.h>
@@ -199,8 +199,15 @@ int main(int, char const**){
     
     KMatrix kmX("0, 2, 8, 2, 0, -2, -8, -2, 0");
     KMatrix kmY("8, 2, 0, -2, -8, -2, 0, 2, 8");
-    KPlot kp2("Trace1", kmX, kmY);
-    kp2.setBounds(-5, 5, -5, 5);
+    KPlot kp2(1800, 1200);
+    kp2.addTrace("Trace1", kmX, kmY);
+    kp2.setWindowStyle(KP_WSTYLE_CLASSIC);
+    kp2.setBounds(-2.5, 2.5, -2.5, 2.5);
+    kp2.setGraphTitle("X and Y Things");
+    kp2.setXLabel("X things");
+    kp2.setXTicks(.5, 1, 1);
+    kp2.setYLabel("Y Things");
+    kp2.setYTicks(.5, 1, 1);
 //    kp2.setBounds(-10, 10, -10, 10);
     if (!kp2.setTraceColor("Trace1", sf::Color::Red));
 //    kp.setWindowSize(desktop.height, desktop.height*.75);
